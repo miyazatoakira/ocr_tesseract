@@ -1,0 +1,42 @@
+services:
+  api:
+    build:
+      context: ./backend
+      target: runtime
+    container_name: ocr-api
+    environment:
+      DB_HOST: db
+      DB_USER: postgres
+      DB_PASS: postgres
+      DB_NAME: ocr
+    ports:
+      - "8080:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - uploads:/tmp/uploads
+      - ~/tessdata_custom:/usr/share/tesseract-ocr/5/tessdata:ro
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/status || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  db:
+    image: postgres:15.6-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ocr
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
+  uploads:
