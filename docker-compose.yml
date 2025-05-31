@@ -9,6 +9,7 @@ services:
       DB_USER: postgres
       DB_PASS: postgres
       DB_NAME: ocr
+      OCR_LANG: por_custom
     ports:
       - "8080:3000"
     depends_on:
@@ -16,7 +17,7 @@ services:
         condition: service_healthy
     volumes:
       - uploads:/tmp/uploads
-      - ~/tessdata_custom:/usr/share/tesseract-ocr/5/tessdata:ro
+     # - ~/tessdata_custom:/usr/share/tesseract-ocr/5/tessdata:ro
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:3000/status || exit 1"]
       interval: 30s
