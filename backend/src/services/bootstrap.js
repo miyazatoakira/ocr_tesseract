@@ -9,6 +9,6 @@ export default async function loadModels() {
   return model;
 }
 export function getModel() {
-  if (!model) throw new Error('Modelo ainda não carregado');
+  if (!model) throw new Error('Modelo ainda não foi carregado');
   return model;
 }
