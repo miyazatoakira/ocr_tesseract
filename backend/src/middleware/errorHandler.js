@@ -1,4 +1,5 @@
 export default function errorHandler(err, _req, res, _next) {
   console.error(err);
-  res.status(500).json({ error: err.message || 'Erro interno' });
+  const status = err.status || err.statusCode || 500;
+  res.status(status).json({ error: err.message || 'Erro interno' });
 }
