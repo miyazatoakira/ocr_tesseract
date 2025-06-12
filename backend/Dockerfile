@@ -1,6 +1,6 @@
 FROM node:22-slim AS build
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    tesseract-ocr tesseract-ocr-por libvips \
+    tesseract-ocr tesseract-ocr-por libvips poppler-utils \
     && rm -rf /var/lib/apt/lists/*
 
 
@@ -12,7 +12,7 @@ COPY . .
 
 FROM node:22-slim AS runtime
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    tesseract-ocr tesseract-ocr-por libvips \
+    tesseract-ocr tesseract-ocr-por libvips poppler-utils \
     && rm -rf /var/lib/apt/lists/*
 
 
